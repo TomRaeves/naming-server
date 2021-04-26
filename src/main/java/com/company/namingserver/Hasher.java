@@ -10,7 +10,7 @@ public class Hasher {
 
         //double result = (IP.hashCode() + hostname.hashCode()+max)*(32768d/(max+abs(min)));
         //Eventueel hash maken over naam EN IP zodat je telkens een verschillende ID hebt
-        
+
         return (int) result;
     }
 }
