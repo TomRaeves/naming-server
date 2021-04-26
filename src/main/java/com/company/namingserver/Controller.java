@@ -42,6 +42,9 @@ public class Controller {
 
     }
 
+    //nog een find file functie
+    //
+
     private boolean ExistTest(String ip) {
         boolean testPassed = false;
         if(nodeHandler.checkNode(ip))  //returns true when already in hashMap
