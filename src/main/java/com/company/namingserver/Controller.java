@@ -1,0 +1,51 @@
+package com.company.namingserver;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+public class Controller {
+
+    @PutMapping("/addNode/{name}")
+    public String addNode(@PathVariable("name")String name) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String clientAddr = request.getRemoteAddr();
+        if(ExistTest(clientAddr)){
+            return "You are already added, You cannot add yourself multiple times.";
+        }
+        nodeHandler.addNode(name,clientAddr);
+        return "Node added succesfully!";
+    }
+
+    @PutMapping("/removeNode")
+    public String removeNode() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String clientAddr = request.getRemoteAddr();
+        if(!ExistTest(clientAddr)){
+            return "You are not yet added to the system!\nTo add yourself as a user use the following command: /addNode/<name>\n";
+        }
+        nodeHandler.removeNode(clientAddr);
+        return "User succesfully deleted";
+    }
+
+    @GetMapping("/getID")
+    public int getID(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String clientAddr = request.getRemoteAddr();
+        return Integer.parseInt(nodeHandler.getKey(clientAddr));
+
+    }
+
+    private boolean ExistTest(String ip) {
+        boolean testPassed = false;
+        if(nodeHandler.checkNode(ip))  //returns true when already in hashMap
+            testPassed = true;
+        return testPassed;
+    }
+}
