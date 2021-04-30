@@ -39,8 +39,19 @@ public class Controller {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String clientAddr = request.getRemoteAddr();
         return Integer.parseInt(nodeHandler.getKey(clientAddr));
+    }
+
+    @PutMapping("/addFile/{filename}")
+    public String addFile(@PathVariable("filename") String fileName){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        if(!ExistTest(request.getRemoteAddr())){
+            return "You are not yet added to the system therefore you cannot add files!\nTo add yourself as a user use the following command: /addNode/<name>\n";
+        }
+        fileHandler.addFile(fileName, nodeHandler.nodesMap);
+        return "The following file has been added succesfully: " +fileName+" with fileID: " + Hasher.hashCode(fileName) ;
 
     }
+
 
     //nog een find file functie
     //

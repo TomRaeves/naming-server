@@ -1,12 +1,17 @@
 package com.company.namingserver;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.Collections.max;
 
 public class File {
 
     private String filename;
     private int nodeID;
     private int hash;
+    private ArrayList<Integer> smallerKey; // holds nodes with smaller keys than filename
+    private ArrayList<Integer> biggerKey;  // holds nodes with bigger keys than filename
 
     public File(String filename, ConcurrentHashMap<Integer, String> nodes){
         this.filename = filename;
@@ -32,31 +37,24 @@ public class File {
     }
 
     public int setNodeID(ConcurrentHashMap<Integer, String> nodes) {
-        int array[] = new int[nodes.size()];
-        int i = 0, temp = 1000000, temp2 = 0; //zal tussen een van deze 2 liggen
+        ArrayList<Integer> smallerKey = new ArrayList<>();
+        ArrayList<Integer> biggerKey = new ArrayList<>();
 
         for (ConcurrentHashMap.Entry<Integer, String> entry : nodes.entrySet()) {
-            int key = entry.getKey();
-            if (key > temp2) {
-                temp2 = entry.getKey();
+            if (entry.getKey()<hash){
+                smallerKey.add(entry.getKey());
             }
-            if (key < hash) {
-                array[i] = entry.getKey();
-                i++;
+            else{
+                biggerKey.add(entry.getKey());
             }
+        }
+        if(smallerKey.size()==0){
+            return max(biggerKey);
+        }
+        else{
+            return max(smallerKey);
         }
 
-        for (int j = 0; j < array.length; j++) {
-            if (hash - array[j] < temp){
-                temp = array[j];
-            }
-        }
-
-        if (temp == 0){
-            return temp2;
-        }
-        else {
-            return temp;
-        }
     }
+
 }
