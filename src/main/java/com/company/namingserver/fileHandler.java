@@ -31,10 +31,8 @@ public class fileHandler {
             if(hash==entry.getKey()){
                 return "Filename with key "+entry.getKey()+" is located at node with ID "+ entry.getValue().getNodeID();
             }
-
         }
         return "could not find the file you were looking for.";
-
     }
 
     public static fileHandler instance;

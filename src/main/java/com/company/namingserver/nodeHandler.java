@@ -3,7 +3,8 @@ package com.company.namingserver;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import javax.xml.stream.*;
+import java.io.*;
 
 public class nodeHandler {
 
@@ -11,7 +12,11 @@ public class nodeHandler {
 
     public static void updateXML() { //The XML has to be updated after every adding/removing of a node
         System.out.println("Updating XML file");
-        //XML.main(nodes);
+        try {
+            XML.save(nodesMap, new FileWriter("test1.xml"));
+        } catch (IOException | XMLStreamException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void addNode(String name, String IP) {
@@ -19,7 +24,7 @@ public class nodeHandler {
         Node tempNode = new Node(name, IP);
         System.out.println("The ID of the new node is: "+tempNode.getID());
         nodesMap.put(tempNode.getID(), tempNode.getIP());
-        //updateXML();
+        updateXML();
     }
 
     public static void removeNode(String IP) {
@@ -29,7 +34,7 @@ public class nodeHandler {
                 nodesMap.remove(entry.getKey());
             }
         }
-        //updateXML();
+        updateXML();
     }
 
     public static boolean checkNode(String IP){
