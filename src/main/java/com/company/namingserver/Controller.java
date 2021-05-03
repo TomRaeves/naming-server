@@ -44,7 +44,6 @@ public class Controller {
     @GetMapping("/searchFile/{name}")
     public String searchFile(@PathVariable("name")String name){
         return fileHandler.searchFile(fileHandler.filesMap,name);
-
     }
 
     @PutMapping("/addFile/{filename}")
@@ -55,7 +54,6 @@ public class Controller {
         }
         fileHandler.addFile(fileName, nodeHandler.nodesMap);
         return "The following file has been added succesfully " +fileName+" with fileID: " + Hasher.hashCode(fileName) ;
-
     }
 
     private boolean ExistTest(String ip) {
