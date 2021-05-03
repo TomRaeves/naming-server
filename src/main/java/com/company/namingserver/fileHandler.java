@@ -29,7 +29,7 @@ public class fileHandler {
 
         for (ConcurrentHashMap.Entry<Integer, File> entry : filesMap.entrySet()) {
             if(hash==entry.getKey()){
-                return "Filename with key "+entry.getKey()+" is located at node with ID "+ entry.getValue().getNodeID();
+                return "Filename with ID "+entry.getKey()+" is located at node with ID "+ entry.getValue().getNodeID();
             }
         }
         return "could not find the file you were looking for.";

@@ -21,7 +21,7 @@ public class XML {
                 // Do the Collection
                 for (Map.Entry<K, V> e : map.entrySet()) {
                     xsw.writeStartElement("entry");
-                    xsw.writeAttribute("Id", e.getKey().toString());
+                    xsw.writeAttribute("ID", e.getKey().toString());
                     xsw.writeAttribute("IP", e.getValue().toString());
                     xsw.writeEndElement();
                     xsw.writeCharacters("\r\n");
