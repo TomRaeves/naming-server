@@ -17,10 +17,10 @@ public class Controller {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String clientAddr = request.getRemoteAddr();
         if(ExistTest(clientAddr)){
-            return "You are already added, You cannot add yourself multiple times.";
+            return "You are already added, You cannot add yourself multiple times.\n";
         }
         nodeHandler.addNode(name,clientAddr);
-        return "Node added succesfully!";
+        return "Node added succesfully!\n";
     }
 
     @PutMapping("/removeNode")
@@ -31,7 +31,7 @@ public class Controller {
             return "You are not yet added to the system!\nTo add yourself as a user use the following command: /addNode/<name>\n";
         }
         nodeHandler.removeNode(clientAddr);
-        return "User succesfully deleted";
+        return "User succesfully deleted\n";
     }
 
     @GetMapping("/getID")
@@ -53,7 +53,7 @@ public class Controller {
             return "You are not yet added to the system therefore you cannot add files!\nTo add yourself as a user use the following command: /addNode/<name>\n";
         }
         fileHandler.addFile(fileName, nodeHandler.nodesMap);
-        return "The following file has been added succesfully " +fileName+" with fileID: " + Hasher.hashCode(fileName) ;
+        return "The following file has been added succesfully " +fileName+" with fileID: " + Hasher.hashCode(fileName)+ " \n" ;
     }
 
     private boolean ExistTest(String ip) {
