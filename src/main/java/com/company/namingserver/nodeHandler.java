@@ -47,6 +47,7 @@ public class nodeHandler {
                 isPresent = true;
             }
         }
+        if(isPresent=false){System.out.println("Node is already an active user!");}
         return isPresent;
     }
 
