@@ -41,6 +41,12 @@ public class Controller {
         return Integer.parseInt(nodeHandler.getKey(clientAddr));
     }
 
+    @GetMapping("/searchFile/{name}")
+    public String searchFile(@PathVariable("name")String name){
+        return fileHandler.searchFile(fileHandler.filesMap,name);
+
+    }
+
     @PutMapping("/addFile/{filename}")
     public String addFile(@PathVariable("filename") String fileName){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -51,10 +57,6 @@ public class Controller {
         return "The following file has been added succesfully: " +fileName+" with fileID: " + Hasher.hashCode(fileName) ;
 
     }
-
-
-    //nog een find file functie
-    //
 
     private boolean ExistTest(String ip) {
         boolean testPassed = false;

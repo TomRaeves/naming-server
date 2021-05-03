@@ -24,20 +24,18 @@ public class fileHandler {
         }
     }
 
-    public String searchFile(String filename){
-        int hash = Hasher.hashCode(filename);
+    public static String searchFile(ConcurrentHashMap<Integer, File> filesMap,String fileName){
+        int hash=Hasher.hashCode(fileName);
 
-        if(!filesMap.containsKey(hash)){
-            return "error 404: File not found";
+        for (ConcurrentHashMap.Entry<Integer, File> entry : filesMap.entrySet()) {
+            if(hash==entry.getKey()){
+                return "Filename with key "+entry.getKey()+" is located at node with ID "+ entry.getValue().getNodeID();
+            }
+
         }
-
-        for (Map.Entry<Integer, File> entry : filesMap.entrySet()){
-
-        }
+        return "could not find the file you were looking for.";
 
     }
-
-
 
     public static fileHandler instance;
     public static fileHandler getInstance()
